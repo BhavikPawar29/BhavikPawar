@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhavik D. Pawar — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0f;
+    --deep: #0d0d1a;
+    --ink: #111128;
+    --panel: #13131f;
+    --neon-pink: #ff2d78;
+    --neon-blue: #00e5ff;
+    --neon-gold: #ffd700;
+    --neon-green: #39ff14;
+    --text-bright: #f0f0ff;
+    --text-dim: #8888aa;
+    --text-mono: #aaaacc;
+    --border-ink: rgba(255,255,255,0.08);
+    --panel-border: 2px solid rgba(255,255,255,0.12);
+    --font-display: 'Bangers', cursive;
+    --font-body: 'IBM Plex Mono', monospace;
+    --font-serif: 'Playfair Display', serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--text-bright);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 18px 18px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--neon-pink); }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    padding: 1rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(10,10,15,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-ink);
+  }
+  nav .logo {
+    font-family: var(--font-display); font-size: 1.6rem;
+    letter-spacing: 0.1em; color: var(--neon-pink);
+    text-shadow: 0 0 20px rgba(255,45,120,0.5);
+  }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav a {
+    text-decoration: none; font-size: 0.65rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-dim); transition: color 0.2s;
+  }
+  nav a:hover { color: var(--neon-blue); }
+
+  section {
+    position: relative; z-index: 2;
+    min-height: 100vh; padding: 120px 2rem 80px;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .chapter-tag {
+    font-family: var(--font-display); font-size: 0.85rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--neon-pink); margin-bottom: 0.5rem; opacity: 0.8;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: 0.04em; line-height: 0.95;
+    color: var(--text-bright);
+    text-shadow: 3px 3px 0 var(--neon-pink), 6px 6px 0 rgba(255,45,120,0.2);
+    margin-bottom: 1rem;
+  }
+  .caption {
+    background: rgba(255,45,120,0.06);
+    border-left: 3px solid var(--neon-pink);
+    padding: 1rem 1.5rem; margin: 1.5rem 0;
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 1.05rem; color: var(--text-dim); line-height: 1.7;
+  }
+
+  .panel-grid { display: grid; gap: 2px; margin-top: 2rem; }
+  .panel {
+    background: var(--panel); border: var(--panel-border);
+    padding: 1.5rem; position: relative;
+    transition: transform 0.2s, border-color 0.2s; overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 12px 12px; pointer-events: none;
+  }
+  .panel:hover {
+    transform: translate(-2px,-2px);
+    border-color: var(--neon-pink);
+    box-shadow: 4px 4px 0 var(--neon-pink);
+  }
+  .panel-title {
+    font-family: var(--font-display); font-size: 1.4rem;
+    letter-spacing: 0.08em; color: var(--neon-blue); margin-bottom: 0.5rem;
+  }
+  .panel-body { font-size: 0.85rem; color: var(--text-mono); line-height: 1.7; }
+
+  #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 100px; }
+  #hero .hero-layout {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+  }
+  #hero .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.88; letter-spacing: 0.02em; color: var(--text-bright);
+    animation: flicker 8s infinite;
+  }
+  #hero .hero-name span { display: block; color: var(--neon-pink); text-shadow: 3px 3px 0 rgba(255,45,120,0.3); }
+  #hero .hero-role {
+    font-family: var(--font-body); font-size: 0.8rem;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--neon-blue); margin-top: 1.5rem; margin-bottom: 2rem;
+  }
+  #hero .hero-statement {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 1.1rem; color: var(--text-dim); line-height: 1.6; max-width: 420px;
+  }
+  .enter-btn {
+    display: inline-block; margin-top: 2.5rem; padding: 0.9rem 2.5rem;
+    background: transparent; border: 2px solid var(--neon-pink);
+    color: var(--neon-pink); font-family: var(--font-display);
+    font-size: 1.2rem; letter-spacing: 0.2em;
+    cursor: pointer; text-decoration: none; transition: all 0.2s; position: relative;
+  }
+  .enter-btn::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(255,45,120,0.3); }
+  .enter-btn:hover {
+    background: var(--neon-pink); color: var(--black);
+    box-shadow: 6px 6px 0 rgba(255,45,120,0.4); transform: translate(-3px,-3px);
+  }
+
+  .avatar-frame {
+    width: 360px; height: 420px; border: 3px solid var(--neon-pink);
+    position: relative; background: var(--panel); overflow: hidden;
+    box-shadow: 8px 8px 0 rgba(255,45,120,0.25), -4px -4px 0 rgba(0,229,255,0.15);
+    margin: 0 auto;
+  }
+  .avatar-frame::before {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background-image: radial-gradient(circle, rgba(255,45,120,0.06) 1.5px, transparent 1.5px);
+    background-size: 14px 14px; pointer-events: none;
+  }
+  .avatar-placeholder {
+    width: 100%; height: 100%; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: linear-gradient(160deg, #1a1a2e, #0d0d1a);
+    color: var(--text-dim); font-size: 0.7rem; letter-spacing: 0.2em;
+    text-align: center; gap: 1rem;
+  }
+  .avatar-corner {
+    position: absolute; width: 20px; height: 20px;
+    border-color: var(--neon-blue); border-style: solid; border-width: 0;
+  }
+  .avatar-corner.tl { top: -3px; left: -3px; border-top-width: 3px; border-left-width: 3px; }
+  .avatar-corner.tr { top: -3px; right: -3px; border-top-width: 3px; border-right-width: 3px; }
+  .avatar-corner.bl { bottom: -3px; left: -3px; border-bottom-width: 3px; border-left-width: 3px; }
+  .avatar-corner.br { bottom: -3px; right: -3px; border-bottom-width: 3px; border-right-width: 3px; }
+  .avatar-label {
+    position: absolute; bottom: -1px; left: 0; right: 0;
+    background: var(--neon-pink); color: var(--black);
+    font-family: var(--font-display); font-size: 1rem;
+    letter-spacing: 0.15em; text-align: center; padding: 0.4rem; z-index: 2;
+  }
+
+  .skill-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 2px; margin-top: 1rem;
+  }
+  .skill-card {
+    background: var(--panel); border: var(--panel-border);
+    padding: 1.2rem; position: relative;
+    transition: all 0.2s; overflow: hidden;
+  }
+  .skill-card:hover { border-color: var(--neon-blue); box-shadow: 3px 3px 0 var(--neon-blue); transform: translate(-2px,-2px); }
+  .skill-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    height: 2px; background: var(--neon-blue);
+    width: var(--level, 70%); transition: width 0.6s ease;
+  }
+  .skill-cat { font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--neon-pink); margin-bottom: 0.4rem; }
+  .skill-name { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 0.05em; color: var(--text-bright); }
+
+  .timeline { margin-top: 2rem; position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--neon-pink), transparent);
+  }
+  .exp-entry {
+    margin-left: 2rem; margin-bottom: 3rem; padding: 1.5rem;
+    background: var(--panel); border: var(--panel-border);
+    position: relative; transition: all 0.2s;
+  }
+  .exp-entry::before { content: '◆'; position: absolute; left: -2.4rem; top: 1.5rem; color: var(--neon-pink); font-size: 0.7rem; }
+  .exp-entry:hover { border-color: var(--neon-pink); box-shadow: 4px 4px 0 rgba(255,45,120,0.25); transform: translate(-2px,-2px); }
+  .exp-company { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 0.05em; color: var(--neon-blue); line-height: 1; }
+  .exp-role { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--neon-pink); margin: 0.4rem 0; }
+  .exp-date { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.15em; margin-bottom: 1rem; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li { font-size: 0.82rem; color: var(--text-mono); line-height: 1.6; margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative; }
+  .exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--neon-pink); }
+
+  .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2px; margin-top: 2rem; }
+  .project-card { background: var(--panel); border: var(--panel-border); overflow: hidden; transition: all 0.2s; }
+  .project-card:hover { border-color: var(--neon-gold); box-shadow: 5px 5px 0 rgba(255,215,0,0.25); transform: translate(-3px,-3px); }
+  .project-cover {
+    background: var(--ink); padding: 2rem; border-bottom: 2px solid var(--border-ink);
+    position: relative; min-height: 160px; display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .project-cover::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,215,0,0.04) 1px, transparent 1px); background-size: 16px 16px; }
+  .project-number { font-family: var(--font-display); font-size: 4rem; color: rgba(255,215,0,0.1); position: absolute; top: 0.5rem; right: 1rem; line-height: 1; }
+  .project-title { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.05em; color: var(--neon-gold); line-height: 1.1; position: relative; z-index: 1; }
+  .project-tagline { font-family: var(--font-serif); font-style: italic; font-size: 0.8rem; color: var(--text-dim); margin-top: 0.4rem; position: relative; z-index: 1; }
+  .project-body { padding: 1.2rem; }
+  .project-desc { font-size: 0.8rem; color: var(--text-mono); line-height: 1.6; margin-bottom: 0.8rem; }
+  .tech-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2); color: var(--neon-blue); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.5rem; }
+
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 2rem; }
+  .edu-card { background: var(--panel); border: var(--panel-border); padding: 2rem; transition: all 0.2s; display: flex; flex-direction: column; }
+  .edu-card:hover { border-color: var(--neon-green); box-shadow: 4px 4px 0 rgba(57,255,20,0.2); transform: translate(-2px,-2px); }
+  .edu-degree { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.05em; color: var(--neon-green); line-height: 1.2; margin-bottom: 0.5rem; }
+  .edu-school { font-size: 0.75rem; letter-spacing: 0.05em; color: var(--text-dim); margin-bottom: 1rem; line-height: 1.5; }
+  .edu-year { font-family: var(--font-display); font-size: 2rem; color: rgba(57,255,20,0.2); margin-top: auto; }
+
+  .pub-card { background: var(--panel); border: var(--panel-border); border-left: 3px solid var(--neon-gold); padding: 1.5rem; margin-top: 2rem; }
+  .pub-title { font-family: var(--font-serif); font-size: 1rem; color: var(--text-bright); margin-bottom: 0.5rem; line-height: 1.5; }
+  .pub-meta { font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.05em; }
+
+  #contact { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .closing-mono { font-family: var(--font-serif); font-style: italic; font-size: 1.2rem; color: var(--text-dim); line-height: 1.8; margin-bottom: 3rem; max-width: 480px; }
+  .contact-form { background: var(--panel); border: var(--panel-border); padding: 2rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label { display: block; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--neon-pink); margin-bottom: 0.4rem; }
+  .form-group input, .form-group textarea {
+    width: 100%; background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-ink); border-bottom-color: rgba(255,255,255,0.2);
+    color: var(--text-bright); font-family: var(--font-body); font-size: 0.85rem;
+    padding: 0.7rem 0.8rem; outline: none; transition: border-color 0.2s; resize: none;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--neon-pink); }
+  .submit-btn {
+    width: 100%; padding: 0.9rem; background: transparent;
+    border: 2px solid var(--neon-pink); color: var(--neon-pink);
+    font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.2em;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .submit-btn:hover { background: var(--neon-pink); color: var(--black); }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem; padding: 1rem 0;
+    border-bottom: 1px solid var(--border-ink); text-decoration: none;
+    color: var(--text-mono); font-size: 0.85rem; transition: all 0.2s;
+  }
+  .contact-link:hover { color: var(--neon-blue); padding-left: 0.5rem; }
+  .contact-link-icon {
+    width: 32px; height: 32px; border: 1px solid var(--border-ink);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 0.9rem; color: var(--neon-pink); flex-shrink: 0;
+  }
+
+  .strength-strip { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 1.5rem; }
+  .strength-pill {
+    background: rgba(255,45,120,0.08); border: 1px solid rgba(255,45,120,0.2);
+    padding: 0.4rem 1rem; font-size: 0.72rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--neon-pink); transition: all 0.2s;
+  }
+  .strength-pill:hover { background: var(--neon-pink); color: var(--black); }
+
+  .panel-divider {
+    width: 100%; height: 2px; position: relative; z-index: 2;
+    background: linear-gradient(to right, var(--neon-pink), transparent);
+  }
+
+  footer {
+    position: relative; z-index: 2; text-align: center; padding: 2rem;
+    border-top: 1px solid var(--border-ink);
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim);
+  }
+
+  .scanline {
+    position: fixed; top: 0; left: 0; right: 0; height: 2px;
+    background: rgba(0,229,255,0.04); z-index: 998;
+    animation: scan 8s linear infinite; pointer-events: none;
+  }
+  .cursor-glow {
+    position: fixed; width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,45,120,0.04) 0%, transparent 70%);
+    pointer-events: none; transform: translate(-50%,-50%); z-index: 0;
+    transition: left 0.15s, top 0.15s;
+  }
+
+  @keyframes flicker {
+    0%,100%{opacity:1} 92%{opacity:1} 93%{opacity:0.4} 94%{opacity:1} 96%{opacity:0.7} 97%{opacity:1}
+  }
+  @keyframes scan { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
+
+  .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    #hero .hero-layout { grid-template-columns: 1fr; }
+    .hero-avatar-wrap { display: none; }
+    #about .panel-grid { grid-template-columns: 1fr; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 3rem; }
+    nav ul { gap: 1rem; }
+    nav a { font-size: 0.55rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scanline"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<nav>
+  <div class="logo">B.D.P</div>
+  <ul>
+    <li><a href="#about">Origin</a></li>
+    <li><a href="#skills">Arsenal</a></li>
+    <li><a href="#experience">Journey</a></li>
+    <li><a href="#projects">Works</a></li>
+    <li><a href="#contact">Signal</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-layout">
+    <div class="hero-text">
+      <div class="chapter-tag" style="font-size:0.75rem;">Chapter 0 — The Spider and the Void</div>
+      <h1 class="hero-name">
+        BHAVIK
+        <span>PAWAR</span>
+      </h1>
+      <div class="hero-role">Backend Developer · ML Engineer · Builder of Systems</div>
+      <p class="hero-statement">
+        "There is but one truly serious question — whether systems are worth building in a universe that gives no reasons. I build anyway."
+      </p>
+      <a href="#about" class="enter-btn">Enter the Story</a>
+    </div>
+    <div class="hero-avatar-wrap" style="position:relative; display:flex; align-items:center; justify-content:center;">
+      <div class="avatar-frame">
+        <img src="images/profile.png" alt="Bhavik Pawar" class="avatar-img">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.3;">
+            <circle cx="40" cy="28" r="16" stroke="#ff2d78" stroke-width="2"/>
+            <path d="M8 72c0-17.7 14.3-32 32-32s32 14.3 32 32" stroke="#ff2d78" stroke-width="2"/>
+          </svg>
+          <span style="font-size:0.6rem; letter-spacing:0.2em; color:rgba(255,45,120,0.5);">[ ADD YOUR PHOTO HERE ]</span>
+          <span style="font-size:0.55rem; color:rgba(255,255,255,0.2); max-width:180px; text-align:center; line-height:1.6;">Replace .avatar-placeholder with an img tag</span>
+        </div>
+        <div class="avatar-corner tl"></div>
+        <div class="avatar-corner tr"></div>
+        <div class="avatar-corner bl"></div>
+        <div class="avatar-corner br"></div>
+        <div class="avatar-label">BHAVIK D. H. PAWAR</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="panel-divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="chapter-tag fade-up">Chapter 1 — Where This Begins</div>
+  <h2 class="section-title fade-up">ORIGIN<br>STORY</h2>
+  <div class="caption fade-up">
+    "He never introduced himself as a developer. He'd say he was someone who found broken things and stayed until they made sense."
+  </div>
+  <div class="panel-grid" style="grid-template-columns: repeat(3,1fr);">
+    <div class="panel fade-up" style="grid-column:span 2; grid-row:span 2;">
+      <div class="panel-title">The Beginning</div>
+      <div class="panel-body">
+        <p>Nashik, India. A computer engineering student who didn't wait for graduation to start building. Diploma from MET Bhujbal Knowledge City, now pursuing B.E. at Guru Gobind Singh College of Engineering.</p>
+        <br>
+        <p>Not the kind to collect certificates and wait. The kind who reverse-engineers a stock market at 20, builds RAG pipelines before most people know what embeddings are, and writes genomic annotation software that ends up published.</p>
+        <br>
+        <p>The world is a system. Systems have rules. Rules can be rewritten. That's always been the working theory.</p>
+      </div>
+    </div>
+    <div class="panel fade-up">
+      <div class="panel-title">Location</div>
+      <div class="panel-body" style="font-family:var(--font-display); font-size:1.2rem; color:var(--neon-pink);">Nashik, Maharashtra<br><span style="font-size:0.8rem; color:var(--text-dim);">India</span></div>
+    </div>
+    <div class="panel fade-up">
+      <div class="panel-title">Status</div>
+      <div class="panel-body">
+        <span style="color:var(--neon-green); font-size:0.7rem; letter-spacing:0.2em;">● PURSUING B.E.</span><br>
+        <span style="color:var(--text-dim); font-size:0.72rem;">Computer Engineering · 2024–Present</span>
+      </div>
+    </div>
+    <div class="panel fade-up" style="grid-column:span 3;">
+      <div class="panel-title">Philosophy</div>
+      <div class="panel-body" style="font-family:var(--font-serif); font-style:italic; color:var(--text-dim); font-size:0.95rem; line-height:1.8;">
+        "The absurd is born of the confrontation between the human need and the unreasonable silence of the world." And yet — I keep building. Maybe that's the answer.
+      </div>
+    </div>
+  </div>
+  <div class="strength-strip fade-up">
+    <div class="strength-pill">Leadership</div>
+    <div class="strength-pill">Analytical Thinking</div>
+    <div class="strength-pill">Adaptability</div>
+    <div class="strength-pill">Team Coordination</div>
+    <div class="strength-pill">Technical Communication</div>
+    <div class="strength-pill">Problem Solving</div>
+  </div>
+</section>
+
+<div class="panel-divider" style="background:linear-gradient(to right, var(--neon-blue), transparent);"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="chapter-tag fade-up">Chapter 2 — What I Carry</div>
+  <h2 class="section-title fade-up">THE<br>ARSENAL</h2>
+  <div class="caption fade-up">
+    "He never says he's good at something until he's already shipped it. But the list is longer than he lets on."
+  </div>
+
+  <div class="fade-up" style="margin-top:2rem;">
+    <div style="font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--neon-pink); margin-bottom:0.8rem;">— Languages —</div>
+    <div class="skill-grid">
+      <div class="skill-card" style="--level:95%"><div class="skill-cat">core</div><div class="skill-name">Python</div></div>
+      <div class="skill-card" style="--level:80%"><div class="skill-cat">core</div><div class="skill-name">Java</div></div>
+      <div class="skill-card" style="--level:70%"><div class="skill-cat">systems</div><div class="skill-name">C++</div></div>
+      <div class="skill-card" style="--level:65%"><div class="skill-cat">emerging</div><div class="skill-name">Rust</div></div>
+      <div class="skill-card" style="--level:75%"><div class="skill-cat">web</div><div class="skill-name">JavaScript</div></div>
+      <div class="skill-card" style="--level:85%"><div class="skill-cat">data</div><div class="skill-name">SQL</div></div>
+    </div>
+  </div>
+
+  <div class="fade-up" style="margin-top:1.5rem;">
+    <div style="font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--neon-blue); margin-bottom:0.8rem;">— Machine Learning & AI —</div>
+    <div class="skill-grid">
+      <div class="skill-card" style="--level:85%"><div class="skill-cat">framework</div><div class="skill-name">TensorFlow</div></div>
+      <div class="skill-card" style="--level:82%"><div class="skill-cat">framework</div><div class="skill-name">Scikit-learn</div></div>
+      <div class="skill-card" style="--level:88%"><div class="skill-cat">data</div><div class="skill-name">Pandas</div></div>
+      <div class="skill-card" style="--level:75%"><div class="skill-cat">ml</div><div class="skill-name">XGBoost</div></div>
+      <div class="skill-card" style="--level:70%"><div class="skill-cat">dl</div><div class="skill-name">Keras</div></div>
+      <div class="skill-card" style="--level:80%"><div class="skill-cat">viz</div><div class="skill-name">Matplotlib</div></div>
+      <div class="skill-card" style="--level:75%"><div class="skill-cat">rag</div><div class="skill-name">LLM Pipelines</div></div>
+      <div class="skill-card" style="--level:72%"><div class="skill-cat">search</div><div class="skill-name">Vector DBs</div></div>
+    </div>
+  </div>
+
+  <div class="fade-up" style="margin-top:1.5rem;">
+    <div style="font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--neon-gold); margin-bottom:0.8rem;">— Backend & DevOps —</div>
+    <div class="skill-grid">
+      <div class="skill-card" style="--level:90%"><div class="skill-cat">api</div><div class="skill-name">FastAPI</div></div>
+      <div class="skill-card" style="--level:85%"><div class="skill-cat">database</div><div class="skill-name">PostgreSQL</div></div>
+      <div class="skill-card" style="--level:75%"><div class="skill-cat">cache</div><div class="skill-name">Redis</div></div>
+      <div class="skill-card" style="--level:80%"><div class="skill-cat">ops</div><div class="skill-name">Docker</div></div>
+      <div class="skill-card" style="--level:85%"><div class="skill-cat">vcs</div><div class="skill-name">Git/GitHub</div></div>
+      <div class="skill-card" style="--level:70%"><div class="skill-cat">auth</div><div class="skill-name">JWT & RBAC</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="panel-divider" style="background:linear-gradient(to right, var(--neon-gold), transparent);"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="chapter-tag fade-up">Chapter 3 — Places I've Been</div>
+  <h2 class="section-title fade-up">THE<br>JOURNEY</h2>
+  <div class="caption fade-up">
+    "Every place teaches you something. Sometimes what it teaches is what you don't want to become. Sometimes it's everything."
+  </div>
+  <div class="timeline fade-up">
+    <div class="exp-entry">
+      <div class="exp-company">4Fox Solutions</div>
+      <div class="exp-role">Backend Developer Intern</div>
+      <div class="exp-date">Jan 2026 – Feb 2026 · Nashik, India</div>
+      <ul class="exp-bullets">
+        <li>Built a scalable multi-tenant SaaS backend using FastAPI — the kind of architecture meant to outlast the project that spawned it.</li>
+        <li>Implemented JWT-based authentication and Role-Based Access Control (RBAC). Security as a first-class concern, not an afterthought.</li>
+        <li>Designed PostgreSQL schemas and integrated Redis for caching. Every query optimized like it mattered, because it did.</li>
+        <li>Deployed via Docker on cloud platforms: Render, Supabase, Upstash. From localhost to live in clean containers.</li>
+        <li>Tested and documented APIs using Postman and Swagger. Code without documentation is a monologue, not a conversation.</li>
+      </ul>
+      <div style="margin-top:1rem; font-family:var(--font-serif); font-style:italic; font-size:0.82rem; color:var(--text-dim);">
+        "First real stint. Built something production-ready. Learned that architecture is the autobiography of decisions made under pressure."
+      </div>
+    </div>
+    <div class="exp-entry" style="opacity:0.65;">
+      <div class="exp-company" style="font-size:1.3rem; color:var(--text-dim);">Advisory Board</div>
+      <div class="exp-role">Department Advisor · MET Bhujbal Knowledge City</div>
+      <div class="exp-date">Extracurricular · Nashik, India</div>
+      <ul class="exp-bullets">
+        <li>Contributed to academic planning, technical strategy, and student development initiatives.</li>
+        <li>Member — Coding Club, GGS College of Engineering. Competitive programming, collaborative problem-solving, peer learning.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="panel-divider" style="background:linear-gradient(to right, var(--neon-green), transparent);"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="chapter-tag fade-up">Chapter 4 — Things I Built in the Dark</div>
+  <h2 class="section-title fade-up">THE<br>WORKS</h2>
+  <div class="caption fade-up">
+    "Most of these were built at 2am. That's not a flex — that's just when the noise stops and the real work can begin."
+  </div>
+  <div class="project-grid fade-up">
+    <div class="project-card">
+      <div class="project-cover">
+        <div class="project-number">01</div>
+        <div class="project-title">SANCTUM</div>
+        <div class="project-tagline">"A fortress with many tenants, none of whom see each other."</div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">Multi-tenant SaaS backend with JWT auth and RBAC. Full data isolation, REST APIs, deployed on cloud. The kind of system that doesn't announce itself — it just works.</div>
+        <div class="tech-tags">
+          <span class="tag">FastAPI</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">Docker</span><span class="tag">2026</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-cover">
+        <div class="project-number">02</div>
+        <div class="project-title">VECTORDOC</div>
+        <div class="project-tagline">"Ask the document what it meant to say."</div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">RAG pipeline for querying documents using embeddings, vector search, and LLM responses. The future of interacting with knowledge — built before it was fashionable.</div>
+        <div class="tech-tags">
+          <span class="tag">Python</span><span class="tag">ChromaDB</span><span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">2025</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-cover">
+        <div class="project-number">03</div>
+        <div class="project-title">NIFTY ORACLE</div>
+        <div class="project-tagline">"The market doesn't care what you know. But it might care what you see."</div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">ML pipeline for NIFTY50 stock prediction using RSI, MACD, OBV indicators. A machine learning exercise in reading signals from noise.</div>
+        <div class="tech-tags">
+          <span class="tag">Python</span><span class="tag">ML</span><span class="tag">Scikit-learn</span><span class="tag">2024</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-cover">
+        <div class="project-number">04</div>
+        <div class="project-title">GRADIENT ZERO</div>
+        <div class="project-tagline">"Understanding a thing means building it from nothing."</div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">Gradient descent from scratch. Adaptive learning rate, convergence tracking, validated against sklearn. A meditation on the mathematics of learning itself.</div>
+        <div class="tech-tags">
+          <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">Algorithms</span><span class="tag">2023</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-cover">
+        <div class="project-number">05</div>
+        <div class="project-title">DOIT</div>
+        <div class="project-tagline">"Clean code is a love letter to whoever reads it next."</div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">Modular Java application with clean OOP architecture. Built when the instinct for good design was first forming. Still holds up.</div>
+        <div class="tech-tags">
+          <span class="tag">Java</span><span class="tag">OOP</span><span class="tag">Architecture</span><span class="tag">2023</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-cover">
+        <div class="project-number">06</div>
+        <div class="project-title">VAULT BANK</div>
+        <div class="project-tagline">"Every transaction is a choice. Every schema is a philosophy."</div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">Desktop banking system with authentication, transactions, JDBC storage. Java Swing. The first time something felt real — real users, real data.</div>
+        <div class="tech-tags">
+          <span class="tag">Java</span><span class="tag">Swing</span><span class="tag">JDBC</span><span class="tag">2022</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="panel-divider" style="background:linear-gradient(to right, rgba(57,255,20,0.8), transparent);"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="chapter-tag fade-up">Chapter 5 — The Books Between Us</div>
+  <h2 class="section-title fade-up">FORMA­TION</h2>
+  <div class="caption fade-up">
+    "Education is not the filling of a pail, but the lighting of a fire. The fire is still going."
+  </div>
+  <div class="edu-grid fade-up">
+    <div class="edu-card">
+      <div class="edu-degree">Bachelor of Engineering</div>
+      <div style="color:var(--neon-green); font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem;">● Pursuing</div>
+      <div class="edu-school">Computer Engineering<br>Guru Gobind Singh College of Engineering and Research Centre<br>Nashik, India</div>
+      <div class="edu-year">2024–</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Diploma in Computer Engineering</div>
+      <div style="color:var(--text-dim); font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem;">Completed</div>
+      <div class="edu-school">MET Bhujbal Knowledge City<br>Institute of Technology, Nashik, India</div>
+      <div class="edu-year">2021–2024</div>
+    </div>
+  </div>
+  <div class="pub-card fade-up">
+    <div style="font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--neon-gold); margin-bottom:0.8rem;">— Publication —</div>
+    <div class="pub-title">Genomic Sequence, Analysis and Functional Annotation Prediction Software</div>
+    <div class="pub-meta">Pawar, Bhavik D., et al. · Journal of Computational Science and Engineering · Vol. 2, Issue 3, 2024 · pp. 324–337</div>
+    <div style="margin-top:0.8rem; font-family:var(--font-serif); font-style:italic; font-size:0.82rem; color:var(--text-dim);">
+      "Written at a desk that was too small. Submitted before the deadline, barely. Published anyway. That's enough."
+    </div>
+  </div>
+</section>
+
+<div class="panel-divider" style="background:linear-gradient(to right, var(--neon-blue), transparent);"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="chapter-tag fade-up">Epilogue — Find Me If You Must</div>
+  <h2 class="section-title fade-up">SIGNAL<br>ME</h2>
+  <div class="contact-layout fade-up">
+    <div>
+      <p class="closing-mono">
+        "Every conversation is a door you didn't know was there. If something here made you want to build something together — knock. I'm usually awake."
+      </p>
+      <a href="mailto:bhavikdeepawar007@gmail.com" class="contact-link">
+        <div class="contact-link-icon">@</div>
+        <span>bhavikdeepawar007@gmail.com</span>
+      </a>
+      <a href="https://github.com/BhavikPawar29" target="_blank" class="contact-link">
+        <div class="contact-link-icon">GH</div>
+        <span>github.com/BhavikPawar29</span>
+      </a>
+      <a href="https://www.linkedin.com/in/bhavikdhpawar" target="_blank" class="contact-link">
+        <div class="contact-link-icon">LI</div>
+        <span>linkedin.com/in/bhavikdhpawar</span>
+      </a>
+      <a href="tel:+919156543168" class="contact-link">
+        <div class="contact-link-icon">☏</div>
+        <span>+91-9156543168</span>
+      </a>
+    </div>
+    <div class="contact-form">
+      <div style="font-family:var(--font-display); font-size:1.2rem; letter-spacing:0.1em; color:var(--neon-pink); margin-bottom:1.5rem;">— COMPOSE A MESSAGE —</div>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Who are you?">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="How do I find you back?">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="5" placeholder="Say the thing you actually mean."></textarea>
+      </div>
+      <button class="submit-btn" id="sendBtn">SEND THE SIGNAL →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div style="font-family:var(--font-display); font-size:1.5rem; color:var(--neon-pink); margin-bottom:0.5rem; opacity:0.4;">★</div>
+  Bhavik D. Pawar · Nashik, India · Built in the dark
+  <div style="margin-top:0.5rem; font-family:var(--font-serif); font-style:italic; color:rgba(255,255,255,0.2); font-size:0.75rem; letter-spacing:0; text-transform:none;">
+    "One must imagine Sisyphus happy."
+  </div>
+</footer>
+
+<script>
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  fadeEls.forEach(el => obs.observe(el));
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id ? 'var(--neon-blue)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => navObs.observe(s));
+
+  document.getElementById('sendBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    this.textContent = 'SIGNAL SENT ✓';
+    this.style.cssText += 'background:var(--neon-green);color:var(--black);border-color:var(--neon-green);';
+    setTimeout(() => {
+      this.textContent = 'SEND THE SIGNAL →';
+      this.style.background = '';
+      this.style.color = '';
+      this.style.borderColor = '';
+    }, 3000);
+  });
+</script>
+</body>
+</html>
