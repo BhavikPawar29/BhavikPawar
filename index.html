@@ -66,13 +66,47 @@
     letter-spacing: 0.1em; color: var(--neon-pink);
     text-shadow: 0 0 20px rgba(255,45,120,0.5);
   }
-  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
   nav a {
     text-decoration: none; font-size: 0.65rem;
     letter-spacing: 0.2em; text-transform: uppercase;
     color: var(--text-dim); transition: color 0.2s;
   }
   nav a:hover { color: var(--neon-blue); }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px; background: none; border: none;
+    z-index: 1001;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--neon-pink); transition: all 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(10,10,15,0.97); backdrop-filter: blur(16px);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none; font-family: var(--font-display);
+    font-size: 2rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-dim); transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--neon-pink); }
+  .mobile-menu .dl-btn-mobile {
+    margin-top: 1rem; padding: 0.8rem 2rem;
+    border: 2px solid var(--neon-blue); color: var(--neon-blue);
+    font-family: var(--font-display); font-size: 1rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    cursor: pointer; background: transparent; text-decoration: none;
+  }
 
   section {
     position: relative; z-index: 2;
@@ -325,77 +359,128 @@
   .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 
+  /* Download CV button in nav */
+  .dl-cv-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.45rem 1.1rem; border: 1.5px solid var(--neon-blue);
+    color: var(--neon-blue); background: transparent;
+    font-family: var(--font-body); font-size: 0.6rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.2s; cursor: pointer;
+    white-space: nowrap;
+  }
+  .dl-cv-btn:hover { background: var(--neon-blue); color: var(--black); }
+
+  /* Hero Download CV btn */
+  .dl-cv-hero {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1rem; padding: 0.75rem 1.8rem;
+    border: 2px solid var(--neon-blue); color: var(--neon-blue);
+    background: transparent; font-family: var(--font-display);
+    font-size: 1.1rem; letter-spacing: 0.18em;
+    text-decoration: none; transition: all 0.2s; cursor: pointer;
+  }
+  .dl-cv-hero:hover { background: var(--neon-blue); color: var(--black); box-shadow: 4px 4px 0 rgba(0,229,255,0.3); transform: translate(-2px,-2px); }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px; background: none; border: none;
+    z-index: 1001;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--neon-pink); transition: all 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(10,10,15,0.97); backdrop-filter: blur(16px);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none; font-family: var(--font-display);
+    font-size: 2rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-dim); transition: color 0.2s;
+  }
+  .mobile-menu a:hover, .mobile-menu a:active { color: var(--neon-pink); }
+  .mobile-menu .dl-btn-mobile {
+    margin-top: 0.5rem; padding: 0.8rem 2rem;
+    border: 2px solid var(--neon-blue); color: var(--neon-blue);
+    font-family: var(--font-display); font-size: 1.1rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    cursor: pointer; background: transparent; text-decoration: none;
+  }
+
   @media (max-width: 768px) {
-    #hero .hero-layout { grid-template-columns: 1fr; }
+    body { cursor: default; }
+    nav { padding: 0.85rem 1.2rem; }
+    nav ul { display: none; }
+    .hamburger { display: flex; }
+    .dl-cv-btn { display: none; }
+
+    section { padding: 80px 1rem 50px; min-height: auto; }
+    #hero { min-height: 100svh; padding-top: 80px; }
+    #hero .hero-layout { grid-template-columns: 1fr; gap: 1.5rem; }
     .hero-avatar-wrap { display: none; }
-    #about .panel-grid { grid-template-columns: 1fr; }
-    .contact-layout { grid-template-columns: 1fr; }
+    #hero .hero-name { font-size: clamp(3rem, 15vw, 5.5rem); }
+    #hero .hero-role { font-size: 0.6rem; letter-spacing: 0.18em; margin-top: 1rem; margin-bottom: 1rem; }
+    #hero .hero-statement { font-size: 0.88rem; max-width: 100%; }
+    .enter-btn { padding: 0.75rem 1.8rem; font-size: 1rem; margin-top: 1.5rem; }
+    .dl-cv-hero { font-size: 0.95rem; padding: 0.65rem 1.4rem; width: 100%; justify-content: center; }
+
+    .section-title { font-size: clamp(2.2rem, 12vw, 3.5rem); }
+
+    .panel-grid { grid-template-columns: 1fr !important; }
+    .panel { padding: 1.1rem; }
+
+    .skill-grid { grid-template-columns: 1fr 1fr; }
+    .skill-card { padding: 0.9rem; }
+    .skill-name { font-size: 1rem; }
+
+    .timeline::before { left: 0; }
+    .exp-entry { margin-left: 1.5rem; padding: 1rem; }
+    .exp-company { font-size: 1.4rem; }
+    .exp-bullets li { font-size: 0.78rem; }
+
+    .project-grid { grid-template-columns: 1fr; }
+    .project-cover { min-height: 120px; padding: 1.2rem; }
+    .project-title { font-size: 1.2rem; }
+    .project-number { font-size: 3rem; }
+
     .edu-grid { grid-template-columns: 1fr; }
-    .section-title { font-size: 3rem; }
-    nav ul { gap: 1rem; }
-    nav a { font-size: 0.55rem; }
+    .edu-card { padding: 1.2rem; }
+    .edu-degree { font-size: 1.1rem; }
+
+    .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .closing-mono { font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 100%; }
+    .contact-form { padding: 1.2rem; }
+    .contact-link { font-size: 0.78rem; }
+    .contact-link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: calc(100vw - 90px); }
+
+    .strength-strip { gap: 6px; }
+    .strength-pill { font-size: 0.65rem; padding: 0.35rem 0.8rem; }
+
+    .caption { font-size: 0.9rem; padding: 0.8rem 1rem; }
+    .pub-card { padding: 1rem; }
+    .pub-title { font-size: 0.88rem; }
+    .pub-meta { font-size: 0.65rem; }
+
+    .form-group input, .form-group textarea { font-size: 1rem; }
+    .submit-btn { font-size: 0.95rem; padding: 0.9rem; touch-action: manipulation; }
+
+    footer { font-size: 0.6rem; padding: 1.5rem 1rem; }
   }
 
-  @media (max-width: 768px) {
-  body {
-    cursor: default;
+  @media (max-width: 400px) {
+    #hero .hero-name { font-size: clamp(2.5rem, 18vw, 4rem); }
+    .skill-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 2rem; }
   }
-
-  section {
-    padding: 90px 1rem 60px;
-  }
-
-  nav {
-    padding: 0.8rem 1rem;
-  }
-
-  nav ul {
-    gap: 0.6rem;
-  }
-
-  nav a {
-    font-size: 0.5rem;
-  }
-
-  #hero .hero-layout {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .hero-name {
-    font-size: clamp(2.5rem, 10vw, 4rem);
-  }
-
-  .hero-role {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-  }
-
-  .hero-statement {
-    font-size: 0.9rem;
-  }
-
-  .avatar-frame {
-    width: 240px;
-    height: 280px;
-  }
-
-  .section-title {
-    font-size: 2.2rem;
-  }
-
-  .panel-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .project-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .skill-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
 </style>
 </head>
 <body>
@@ -411,8 +496,22 @@
     <li><a href="#experience">Journey</a></li>
     <li><a href="#projects">Works</a></li>
     <li><a href="#contact">Signal</a></li>
+    <li><a href="Bhavik_Pawar_CV.pdf" download="Bhavik_Pawar_CV.pdf" class="dl-cv-btn">↓ CV</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile full-screen menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="menu-link">Origin</a>
+  <a href="#skills" class="menu-link">Arsenal</a>
+  <a href="#experience" class="menu-link">Journey</a>
+  <a href="#projects" class="menu-link">Works</a>
+  <a href="#contact" class="menu-link">Signal</a>
+  <a href="Bhavik_Pawar_CV.pdf" download="Bhavik_Pawar_CV.pdf" class="dl-btn-mobile">↓ Download CV</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -428,6 +527,7 @@
         "There is but one truly serious question, whether systems are worth building in a universe that gives no reasons. I build anyway."
       </p>
       <a href="#about" class="enter-btn">Enter the Story</a>
+      <a href="Bhavik_Pawar_CV.pdf" download="Bhavik_Pawar_CV.pdf" class="dl-cv-hero">↓ Download CV</a>
     </div>
     <div class="hero-avatar-wrap" style="position:relative; display:flex; align-items:center; justify-content:center;">
       <div class="avatar-frame">
@@ -778,6 +878,22 @@
 </footer>
 
 <script>
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.menu-link, .dl-btn-mobile').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
   const glow = document.getElementById('cursorGlow');
   document.addEventListener('mousemove', e => {
     glow.style.left = e.clientX + 'px';
