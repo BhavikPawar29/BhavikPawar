@@ -182,7 +182,7 @@
     display: inline-block; margin-top: 2.5rem; padding: 0.9rem 2.5rem;
     background: transparent; border: 2px solid var(--neon-pink);
     color: var(--neon-pink); font-family: var(--font-display);
-    font-size: 1.2rem; letter-spacing: 0.2em;
+    font-size: 1.2rem; letter-spacing: 0.2em; line-height: 1;
     cursor: pointer; text-decoration: none; transition: all 0.2s; position: relative;
   }
   .enter-btn::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(255,45,120,0.3); }
@@ -371,15 +371,15 @@
   }
   .dl-cv-btn:hover { background: var(--neon-blue); color: var(--black); }
 
-  /* Hero Download CV btn — matches enter-btn exactly */
+  /* Hero Download CV btn — identical sizing to enter-btn */
   .dl-cv-hero {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    margin-top: 1rem; padding: 0.9rem 2.5rem;
+    display: inline-block; margin-top: 1rem; padding: 0.9rem 2.5rem;
     border: 2px solid var(--neon-blue); color: var(--neon-blue);
     background: transparent; font-family: var(--font-display);
-    font-size: 1.2rem; letter-spacing: 0.2em;
+    font-size: 1.2rem; letter-spacing: 0.2em; line-height: 1;
     text-decoration: none; transition: all 0.2s; cursor: pointer; position: relative;
   }
+  .dl-cv-hero::before { content: '↓ '; }
   .dl-cv-hero::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(0,229,255,0.3); }
   .dl-cv-hero:hover { background: var(--neon-blue); color: var(--black); box-shadow: 6px 6px 0 rgba(0,229,255,0.4); transform: translate(-3px,-3px); }
 
@@ -437,8 +437,7 @@
     #hero .hero-role { font-size: 0.6rem; letter-spacing: 0.18em; margin-top: 1rem; margin-bottom: 1rem; }
     #hero .hero-statement { font-size: 0.88rem; max-width: 100%; }
     .enter-btn { padding: 0.75rem 1.5rem; font-size: 0.95rem; margin-top: 1.5rem; display: inline-block; }
-    .dl-cv-hero { font-size: 0.95rem; padding: 0.75rem 1.5rem; width: auto; margin-top: 0.75rem; display: inline-flex; }
-    .dl-cv-hero::after { display: none; }
+    .dl-cv-hero { font-size: 0.95rem; padding: 0.75rem 1.5rem; width: auto; margin-top: 0.75rem; display: inline-block; line-height: 1; }
 
     .section-title { font-size: clamp(2.2rem, 12vw, 3.5rem); }
 
@@ -540,7 +539,7 @@
         "There is but one truly serious question, whether systems are worth building in a universe that gives no reasons. I build anyway."
       </p>
       <a href="#about" class="enter-btn">Enter the Story</a>
-      <a href="Bhavik_Pawar_CV.pdf" download="Bhavik_Pawar_CV.pdf" class="dl-cv-hero">↓ Download CV</a>
+      <a href="Bhavik_Pawar_CV.pdf" download="Bhavik_Pawar_CV.pdf" class="dl-cv-hero">Download CV</a>
     </div>
     <div class="hero-avatar-wrap" style="position:relative; display:flex; align-items:center; justify-content:center;">
       <div class="avatar-frame">
