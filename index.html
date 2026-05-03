@@ -371,16 +371,22 @@
   }
   .dl-cv-btn:hover { background: var(--neon-blue); color: var(--black); }
 
-  /* Hero Download CV btn */
+  /* Hero Download CV btn — matches enter-btn exactly */
   .dl-cv-hero {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    margin-top: 1rem; padding: 0.75rem 1.8rem;
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    margin-top: 1rem; padding: 0.9rem 2.5rem;
     border: 2px solid var(--neon-blue); color: var(--neon-blue);
     background: transparent; font-family: var(--font-display);
-    font-size: 1.1rem; letter-spacing: 0.18em;
-    text-decoration: none; transition: all 0.2s; cursor: pointer;
+    font-size: 1.2rem; letter-spacing: 0.2em;
+    text-decoration: none; transition: all 0.2s; cursor: pointer; position: relative;
   }
-  .dl-cv-hero:hover { background: var(--neon-blue); color: var(--black); box-shadow: 4px 4px 0 rgba(0,229,255,0.3); transform: translate(-2px,-2px); }
+  .dl-cv-hero::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(0,229,255,0.3); }
+  .dl-cv-hero:hover { background: var(--neon-blue); color: var(--black); box-shadow: 6px 6px 0 rgba(0,229,255,0.4); transform: translate(-3px,-3px); }
+
+  /* About grid layout */
+  .about-grid { grid-template-columns: repeat(3,1fr); }
+  .about-main { grid-column: span 2; grid-row: span 2; }
+  .about-philosophy { grid-column: span 3; }
 
   .hamburger {
     display: none; flex-direction: column; gap: 5px;
@@ -430,10 +436,17 @@
     #hero .hero-name { font-size: clamp(3rem, 15vw, 5.5rem); }
     #hero .hero-role { font-size: 0.6rem; letter-spacing: 0.18em; margin-top: 1rem; margin-bottom: 1rem; }
     #hero .hero-statement { font-size: 0.88rem; max-width: 100%; }
-    .enter-btn { padding: 0.75rem 1.8rem; font-size: 1rem; margin-top: 1.5rem; }
-    .dl-cv-hero { font-size: 0.95rem; padding: 0.65rem 1.4rem; width: 100%; justify-content: center; }
+    .enter-btn { padding: 0.75rem 1.5rem; font-size: 0.95rem; margin-top: 1.5rem; display: inline-block; }
+    .dl-cv-hero { font-size: 0.95rem; padding: 0.75rem 1.5rem; width: auto; margin-top: 0.75rem; display: inline-flex; }
+    .dl-cv-hero::after { display: none; }
 
     .section-title { font-size: clamp(2.2rem, 12vw, 3.5rem); }
+
+    /* About section: fully stacked on mobile */
+    .about-grid { grid-template-columns: 1fr !important; }
+    .about-main { grid-column: span 1 !important; grid-row: span 1 !important; }
+    .about-philosophy { grid-column: span 1 !important; }
+    .about-main .panel-body { font-size: 0.9rem; line-height: 1.8; }
 
     .panel-grid { grid-template-columns: 1fr !important; }
     .panel { padding: 1.1rem; }
@@ -558,8 +571,8 @@
   <div class="caption fade-up">
     "He never introduced himself as a developer. He'd say he was someone who found broken things and stayed until they made sense."
   </div>
-  <div class="panel-grid" style="grid-template-columns: repeat(3,1fr);">
-    <div class="panel fade-up" style="grid-column:span 2; grid-row:span 2;">
+  <div class="panel-grid about-grid">
+    <div class="panel fade-up about-main">
       <div class="panel-title">The Beginning</div>
       <div class="panel-body">
         <p>Nashik, India. A computer engineering student who didn't wait for graduation to start building. Diploma from MET Bhujbal Knowledge City, now pursuing B.E. at Guru Gobind Singh College of Engineering.</p>
@@ -582,7 +595,7 @@
         <span style="color:var(--text-dim); font-size:0.72rem;">Computer Engineering · 2024–Present</span>
       </div>
     </div>
-    <div class="panel fade-up" style="grid-column:span 3;">
+    <div class="panel fade-up about-philosophy">
       <div class="panel-title">Philosophy</div>
       <div class="panel-body" style="font-family:var(--font-serif); font-style:italic; color:var(--text-dim); font-size:0.95rem; line-height:1.8;">
         "The absurd is born of the confrontation between the human need and the unreasonable silence of the world." And yet — I keep building. Maybe that's the answer.
